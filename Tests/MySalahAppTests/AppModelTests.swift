@@ -33,6 +33,15 @@ private actor ControlledProvider: PrayerTimeProvider {
 }
 
 @MainActor final class AppModelTests: XCTestCase {
+    override func setUp() async throws {
+        try await super.setUp()
+        await MainActor.run {
+            // Hostless XCTest does not run NSApplicationMain. Initialize AppKit
+            // before status items or offscreen views need a WindowServer connection.
+            _ = NSApplication.shared
+        }
+    }
+
     private var temporaryDirectories: [URL] = []
     private var suites: [String] = []
     let metadata = LocationMetadata(latitude: 55.6761, longitude: 12.5683, timeZoneIdentifier: "Europe/Copenhagen", label: "Copenhagen, Denmark")
