@@ -60,6 +60,8 @@ Core tests use clock inputs, URLProtocol stubs, and API responses captured on 28
 
 The core Swift package owns domain logic; AppKit/SwiftUI and OS services live in `App`. See [AGENTS.md](AGENTS.md) for development conventions and timing invariants. Dependencies are pinned in the checked-in lockfiles. MIT notices are bundled and available through **About MySalah**.
 
+The application icon is an ivory crescent on a midnight-blue tile. Its complete macOS size set lives in `App/Assets.xcassets/AppIcon.appiconset`; Xcode compiles it into both Debug and Release bundles for Finder, About, and system surfaces. The menu bar continues to use the native template moon. After editing the 1024-pixel master, run `./scripts/generate-app-icon.sh` to regenerate smaller sizes. See [the artwork notes](docs/app-icon.md) for the source prompt.
+
 ## Build and install locally
 
 ```sh

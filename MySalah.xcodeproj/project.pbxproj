@@ -5,6 +5,16 @@
 	objectVersion = "60";
 	archiveVersion = "1";
 	objects = {
+		E6205702DC1748ABA400EE01 = {
+			path = "App/Assets.xcassets";
+			isa = "PBXFileReference";
+			lastKnownFileType = "folder.assetcatalog";
+			sourceTree = "SOURCE_ROOT";
+		};
+		E6205702DC1748ABA400EE02 = {
+			isa = "PBXBuildFile";
+			fileRef = "E6205702DC1748ABA400EE01";
+		};
 		4A8DCE8DC5130B0A6813A336 = {
 			path = "App/StatusMenuController.swift";
 			isa = "PBXFileReference";
@@ -104,6 +114,7 @@
 		731B2759976C069CA2557084 = {
 			isa = "XCBuildConfiguration";
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon";
 				INFOPLIST_FILE = "App/Info.plist";
 				GENERATE_INFOPLIST_FILE = "NO";
 				ENABLE_HARDENED_RUNTIME = "YES";
@@ -167,6 +178,7 @@
 			isa = "PBXGroup";
 			name = "App";
 			children = (
+				"E6205702DC1748ABA400EE01",
 				"B727B57B7835A5DFC5EFC475",
 				"54628DF94BA9B9CD246EDB2A",
 				"5E526D42EDC3D2268A0125F5",
@@ -335,6 +347,7 @@
 		FA47E66CDA706A0248205C14 = {
 			isa = "XCBuildConfiguration";
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon";
 				INFOPLIST_FILE = "App/Info.plist";
 				GENERATE_INFOPLIST_FILE = "NO";
 				ENABLE_HARDENED_RUNTIME = "YES";
@@ -464,6 +477,7 @@
 			isa = "PBXResourcesBuildPhase";
 			buildActionMask = "2147483647";
 			files = (
+				"E6205702DC1748ABA400EE02",
 				"AEE45A58081A2206AD49AB52",
 			);
 			runOnlyForDeploymentPostprocessing = "0";
