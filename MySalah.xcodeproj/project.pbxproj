@@ -1,0 +1,501 @@
+// !$*UTF8*$!
+{
+	classes = {
+	};
+	objectVersion = "60";
+	archiveVersion = "1";
+	objects = {
+		4A8DCE8DC5130B0A6813A336 = {
+			path = "App/StatusMenuController.swift";
+			isa = "PBXFileReference";
+			lastKnownFileType = "sourcecode.swift";
+			sourceTree = "SOURCE_ROOT";
+		};
+		29B4AE9E32B4C8218F573240 = {
+			isa = "PBXBuildFile";
+			fileRef = "5E526D42EDC3D2268A0125F5";
+		};
+		2B03CEEE5EAAFDC1C2C19A9E = {
+			isa = "PBXFrameworksBuildPhase";
+			buildActionMask = "2147483647";
+			files = (
+				"1B8C4C37D8D8E90412CACB54",
+			);
+			runOnlyForDeploymentPostprocessing = "0";
+		};
+		75B0EAD792C531C2B46B9F78 = {
+			isa = "XCBuildConfiguration";
+			buildSettings = {
+				GENERATE_INFOPLIST_FILE = "YES";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.mehmet.mysalah.tests";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				ENABLE_TESTABILITY = "YES";
+			};
+			name = "Release";
+		};
+		862894B703A6DEDF96A9DD6C = {
+			isa = "XCConfigurationList";
+			defaultConfigurationIsVisible = "0";
+			defaultConfigurationName = "Release";
+			buildConfigurations = (
+				"877A6BA951A2EA0025A2ABE8",
+				"959134B361DD7E21ADEA3164",
+			);
+		};
+		C0C6FF29D665EB93134C9606 = {
+			isa = "XCConfigurationList";
+			defaultConfigurationIsVisible = "0";
+			defaultConfigurationName = "Release";
+			buildConfigurations = (
+				"FA47E66CDA706A0248205C14",
+				"731B2759976C069CA2557084",
+			);
+		};
+		A81B09D9521597EBCAF0CC8B = {
+			path = "App/ThirdPartyNotices.txt";
+			isa = "PBXFileReference";
+			lastKnownFileType = "text";
+			sourceTree = "SOURCE_ROOT";
+		};
+		2C14531262A40EFDC184CA6B = {
+			isa = "PBXBuildFile";
+			fileRef = "4A8DCE8DC5130B0A6813A336";
+		};
+		877A6BA951A2EA0025A2ABE8 = {
+			isa = "XCBuildConfiguration";
+			buildSettings = {
+				ONLY_ACTIVE_ARCH = "YES";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG";
+				DEBUG_INFORMATION_FORMAT = "dwarf";
+				CLANG_ENABLE_MODULES = "YES";
+				CODE_SIGN_IDENTITY = "-";
+				MACOSX_DEPLOYMENT_TARGET = "14.0";
+				ENABLE_USER_SCRIPT_SANDBOXING = "YES";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_STRICT_CONCURRENCY = "complete";
+				CODE_SIGN_STYLE = "Manual";
+				SDKROOT = "macosx";
+				SWIFT_VERSION = "6.0";
+			};
+			name = "Debug";
+		};
+		09448628C6BEE1EA348949D6 = {
+			isa = "PBXBuildFile";
+			fileRef = "4A8DCE8DC5130B0A6813A336";
+		};
+		B28B7AF69320201D1CF206EB = {
+			isa = "PBXGroup";
+			sourceTree = "<group>";
+			children = (
+				"3A2A88DEEFF3D1D23E496597",
+				"8B7A6DECC0651D269EA794C7",
+				"FBDC4F23F93125BBEEAE800C",
+			);
+		};
+		1D698CAB4E448E72B0A54A30 = {
+			isa = "PBXBuildFile";
+			fileRef = "1D4965EF063D63D006C3D35B";
+		};
+		731B2759976C069CA2557084 = {
+			isa = "XCBuildConfiguration";
+			buildSettings = {
+				INFOPLIST_FILE = "App/Info.plist";
+				GENERATE_INFOPLIST_FILE = "NO";
+				ENABLE_HARDENED_RUNTIME = "YES";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.mehmet.mysalah";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = "Release";
+		};
+		85FB49DDF45565AE0723879C = {
+			isa = "PBXBuildFile";
+			fileRef = "8DD9543826A1BBD57444E0FE";
+		};
+		D607CF72D4E3664FA8EC1427 = {
+			isa = "PBXSourcesBuildPhase";
+			buildActionMask = "2147483647";
+			files = (
+				"75A29E53D8539252B3301E6E",
+				"6647B957C0BCE26BFBFC83FE",
+				"39A56DA538DC0EB4321F47E5",
+				"1D698CAB4E448E72B0A54A30",
+				"85FB49DDF45565AE0723879C",
+				"09448628C6BEE1EA348949D6",
+			);
+			runOnlyForDeploymentPostprocessing = "0";
+		};
+		4A285A14BE5A43ECCC2467EB = {
+			path = "Tests/MySalahCoreTests/ScheduleTests.swift";
+			isa = "PBXFileReference";
+			lastKnownFileType = "sourcecode.swift";
+			sourceTree = "SOURCE_ROOT";
+		};
+		EE0CAB39FC3E901481F51121 = {
+			isa = "PBXSourcesBuildPhase";
+			buildActionMask = "2147483647";
+			files = (
+				"2C4DEC9A0B48B0EA611E2C8A",
+				"29B4AE9E32B4C8218F573240",
+				"1265FF2A44732F29B2DF69B5",
+				"1D5F1D71D71D7BCB3B94B9F9",
+				"EB6976B11C86375CA27B4C0A",
+				"19BC1809522977D13F68C88D",
+				"C76D71D890C3B9B26177E38F",
+				"790CBFC314974E8035ACBA18",
+				"2C14531262A40EFDC184CA6B",
+				"3BFA1D6D77AEEF155CE776BA",
+			);
+			runOnlyForDeploymentPostprocessing = "0";
+		};
+		8BCD5BC4CDFDF0918087C782 = {
+			path = "MySalah.app";
+			isa = "PBXFileReference";
+			explicitFileType = "wrapper.application";
+			sourceTree = "BUILT_PRODUCTS_DIR";
+		};
+		3A2A88DEEFF3D1D23E496597 = {
+			isa = "PBXGroup";
+			name = "App";
+			children = (
+				"B727B57B7835A5DFC5EFC475",
+				"54628DF94BA9B9CD246EDB2A",
+				"5E526D42EDC3D2268A0125F5",
+				"1D4965EF063D63D006C3D35B",
+				"8DD9543826A1BBD57444E0FE",
+				"4A8DCE8DC5130B0A6813A336",
+				"A81B09D9521597EBCAF0CC8B",
+				"59BD0A3FF43B32849B319E64",
+			);
+			sourceTree = "<group>";
+		};
+		2C4DEC9A0B48B0EA611E2C8A = {
+			isa = "PBXBuildFile";
+			fileRef = "54628DF94BA9B9CD246EDB2A";
+		};
+		FBDC4F23F93125BBEEAE800C = {
+			isa = "PBXGroup";
+			name = "Products";
+			children = (
+				"8BCD5BC4CDFDF0918087C782",
+				"F219C0274590DA45E4BEF1EA",
+			);
+			sourceTree = "<group>";
+		};
+		959134B361DD7E21ADEA3164 = {
+			isa = "XCBuildConfiguration";
+			buildSettings = {
+				ONLY_ACTIVE_ARCH = "NO";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "";
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				CLANG_ENABLE_MODULES = "YES";
+				CODE_SIGN_IDENTITY = "-";
+				MACOSX_DEPLOYMENT_TARGET = "14.0";
+				ENABLE_USER_SCRIPT_SANDBOXING = "YES";
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_STRICT_CONCURRENCY = "complete";
+				CODE_SIGN_STYLE = "Manual";
+				SDKROOT = "macosx";
+				SWIFT_VERSION = "6.0";
+			};
+			name = "Release";
+		};
+		8B7A6DECC0651D269EA794C7 = {
+			isa = "PBXGroup";
+			name = "Tests";
+			children = (
+				"A2D32B433C67133FB4EE6EE6",
+				"E722719DC100259F89AF150D",
+				"4A285A14BE5A43ECCC2467EB",
+				"17054545C5BC7D635BE3E9F4",
+				"26895FF925F0922D32FE234A",
+				"CEFCB7141D0E93241B0EC105",
+			);
+			sourceTree = "<group>";
+		};
+		3D0D0FB62D56C5886C8EE465 = {
+			isa = "XCSwiftPackageProductDependency";
+			productName = "MySalahCore";
+		};
+		1EB51A9973B38DE0E69A7D3A = {
+			isa = "PBXBuildFile";
+			productRef = "FADCA6D3DC6C14D69C98B668";
+		};
+		B727B57B7835A5DFC5EFC475 = {
+			path = "App/AppDelegate.swift";
+			isa = "PBXFileReference";
+			lastKnownFileType = "sourcecode.swift";
+			sourceTree = "SOURCE_ROOT";
+		};
+		8DD9543826A1BBD57444E0FE = {
+			path = "App/PrayerPanel.swift";
+			isa = "PBXFileReference";
+			lastKnownFileType = "sourcecode.swift";
+			sourceTree = "SOURCE_ROOT";
+		};
+		75A29E53D8539252B3301E6E = {
+			isa = "PBXBuildFile";
+			fileRef = "B727B57B7835A5DFC5EFC475";
+		};
+		F219C0274590DA45E4BEF1EA = {
+			path = "MySalahTests.xctest";
+			isa = "PBXFileReference";
+			explicitFileType = "wrapper.cfbundle";
+			sourceTree = "BUILT_PRODUCTS_DIR";
+		};
+		1D4965EF063D63D006C3D35B = {
+			path = "App/NotificationService.swift";
+			isa = "PBXFileReference";
+			lastKnownFileType = "sourcecode.swift";
+			sourceTree = "SOURCE_ROOT";
+		};
+		1265FF2A44732F29B2DF69B5 = {
+			isa = "PBXBuildFile";
+			fileRef = "1D4965EF063D63D006C3D35B";
+		};
+		A2D32B433C67133FB4EE6EE6 = {
+			path = "Tests/MySalahCoreTests/DataTests.swift";
+			isa = "PBXFileReference";
+			lastKnownFileType = "sourcecode.swift";
+			sourceTree = "SOURCE_ROOT";
+		};
+		07D05CB8E72825DC9150C6D1 = {
+			isa = "XCConfigurationList";
+			defaultConfigurationIsVisible = "0";
+			defaultConfigurationName = "Release";
+			buildConfigurations = (
+				"873CB32C32846858C6CE4644",
+				"75B0EAD792C531C2B46B9F78",
+			);
+		};
+		15C63A2BCB684FE493108AB5 = {
+			productType = "com.apple.product-type.bundle.unit-test";
+			productReference = "F219C0274590DA45E4BEF1EA";
+			buildConfigurationList = "07D05CB8E72825DC9150C6D1";
+			packageProductDependencies = (
+				"FADCA6D3DC6C14D69C98B668",
+			);
+			productName = "MySalahTests";
+			isa = "PBXNativeTarget";
+			buildPhases = (
+				"EE0CAB39FC3E901481F51121",
+				"9365B2F312D9785CB5C64401",
+				"648FBF674733A0B9A3D20767",
+			);
+			dependencies = (
+			);
+			name = "MySalahTests";
+			buildRules = (
+			);
+		};
+		59BD0A3FF43B32849B319E64 = {
+			path = "App/Info.plist";
+			isa = "PBXFileReference";
+			lastKnownFileType = "text.plist.xml";
+			sourceTree = "SOURCE_ROOT";
+		};
+		E722719DC100259F89AF150D = {
+			path = "Tests/MySalahCoreTests/NotificationAndAsrTests.swift";
+			isa = "PBXFileReference";
+			lastKnownFileType = "sourcecode.swift";
+			sourceTree = "SOURCE_ROOT";
+		};
+		648FBF674733A0B9A3D20767 = {
+			isa = "PBXResourcesBuildPhase";
+			buildActionMask = "2147483647";
+			files = (
+				"BBAF9A8827CD21477F0F69BA",
+			);
+			runOnlyForDeploymentPostprocessing = "0";
+		};
+		873CB32C32846858C6CE4644 = {
+			isa = "XCBuildConfiguration";
+			buildSettings = {
+				GENERATE_INFOPLIST_FILE = "YES";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.mehmet.mysalah.tests";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				ENABLE_TESTABILITY = "YES";
+			};
+			name = "Debug";
+		};
+		FA47E66CDA706A0248205C14 = {
+			isa = "XCBuildConfiguration";
+			buildSettings = {
+				INFOPLIST_FILE = "App/Info.plist";
+				GENERATE_INFOPLIST_FILE = "NO";
+				ENABLE_HARDENED_RUNTIME = "YES";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.mehmet.mysalah";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = "Debug";
+		};
+		AEE45A58081A2206AD49AB52 = {
+			isa = "PBXBuildFile";
+			fileRef = "A81B09D9521597EBCAF0CC8B";
+		};
+		EB6976B11C86375CA27B4C0A = {
+			isa = "PBXBuildFile";
+			fileRef = "E722719DC100259F89AF150D";
+		};
+		C76D71D890C3B9B26177E38F = {
+			isa = "PBXBuildFile";
+			fileRef = "26895FF925F0922D32FE234A";
+		};
+		A1FFB6AFB0191A611F1C47E2 = {
+			productType = "com.apple.product-type.application";
+			productReference = "8BCD5BC4CDFDF0918087C782";
+			buildConfigurationList = "C0C6FF29D665EB93134C9606";
+			packageProductDependencies = (
+				"3D0D0FB62D56C5886C8EE465",
+			);
+			productName = "MySalah";
+			isa = "PBXNativeTarget";
+			buildPhases = (
+				"D607CF72D4E3664FA8EC1427",
+				"2B03CEEE5EAAFDC1C2C19A9E",
+				"CD876AC61DEED737EA6029F4",
+			);
+			dependencies = (
+			);
+			name = "MySalah";
+			buildRules = (
+			);
+		};
+		26895FF925F0922D32FE234A = {
+			path = "Tests/MySalahAppTests/AppModelTests.swift";
+			isa = "PBXFileReference";
+			lastKnownFileType = "sourcecode.swift";
+			sourceTree = "SOURCE_ROOT";
+		};
+		19BC1809522977D13F68C88D = {
+			isa = "PBXBuildFile";
+			fileRef = "4A285A14BE5A43ECCC2467EB";
+		};
+		8F5B626E483F79FC4BC78D05 = {
+			isa = "XCLocalSwiftPackageReference";
+			relativePath = ".";
+		};
+		98F54143AB4E86B28C3AFEE0 = {
+			buildConfigurationList = "862894B703A6DEDF96A9DD6C";
+			packageReferences = (
+				"8F5B626E483F79FC4BC78D05",
+			);
+			targets = (
+				"A1FFB6AFB0191A611F1C47E2",
+				"15C63A2BCB684FE493108AB5",
+			);
+			developmentRegion = "en";
+			knownRegions = (
+				"en",
+				"da",
+				"tr",
+				"ar",
+				"Base",
+			);
+			isa = "PBXProject";
+			compatibilityVersion = "Xcode 15.0";
+			productRefGroup = "FBDC4F23F93125BBEEAE800C";
+			projectDirPath = "";
+			attributes = {
+				LastSwiftUpdateCheck = "2600";
+				BuildIndependentTargetsInParallel = "YES";
+				LastUpgradeCheck = "2600";
+			};
+			hasScannedForEncodings = "0";
+			projectRoot = "";
+			mainGroup = "B28B7AF69320201D1CF206EB";
+		};
+		6647B957C0BCE26BFBFC83FE = {
+			isa = "PBXBuildFile";
+			fileRef = "54628DF94BA9B9CD246EDB2A";
+		};
+		790CBFC314974E8035ACBA18 = {
+			isa = "PBXBuildFile";
+			fileRef = "8DD9543826A1BBD57444E0FE";
+		};
+		39A56DA538DC0EB4321F47E5 = {
+			isa = "PBXBuildFile";
+			fileRef = "5E526D42EDC3D2268A0125F5";
+		};
+		5E526D42EDC3D2268A0125F5 = {
+			path = "App/LocationResolver.swift";
+			isa = "PBXFileReference";
+			lastKnownFileType = "sourcecode.swift";
+			sourceTree = "SOURCE_ROOT";
+		};
+		17054545C5BC7D635BE3E9F4 = {
+			path = "Tests/MySalahCoreTests/Fixtures";
+			isa = "PBXFileReference";
+			lastKnownFileType = "folder";
+			sourceTree = "SOURCE_ROOT";
+		};
+		1B8C4C37D8D8E90412CACB54 = {
+			isa = "PBXBuildFile";
+			productRef = "3D0D0FB62D56C5886C8EE465";
+		};
+		BBAF9A8827CD21477F0F69BA = {
+			isa = "PBXBuildFile";
+			fileRef = "17054545C5BC7D635BE3E9F4";
+		};
+		FADCA6D3DC6C14D69C98B668 = {
+			isa = "XCSwiftPackageProductDependency";
+			productName = "MySalahCore";
+		};
+		CD876AC61DEED737EA6029F4 = {
+			isa = "PBXResourcesBuildPhase";
+			buildActionMask = "2147483647";
+			files = (
+				"AEE45A58081A2206AD49AB52",
+			);
+			runOnlyForDeploymentPostprocessing = "0";
+		};
+		1D5F1D71D71D7BCB3B94B9F9 = {
+			isa = "PBXBuildFile";
+			fileRef = "A2D32B433C67133FB4EE6EE6";
+		};
+		54628DF94BA9B9CD246EDB2A = {
+			path = "App/AppModel.swift";
+			isa = "PBXFileReference";
+			lastKnownFileType = "sourcecode.swift";
+			sourceTree = "SOURCE_ROOT";
+		};
+		9365B2F312D9785CB5C64401 = {
+			isa = "PBXFrameworksBuildPhase";
+			buildActionMask = "2147483647";
+			files = (
+				"1EB51A9973B38DE0E69A7D3A",
+			);
+			runOnlyForDeploymentPostprocessing = "0";
+		};
+		CEFCB7141D0E93241B0EC105 = {
+			isa = "PBXFileReference";
+			lastKnownFileType = "sourcecode.swift";
+			path = "Tests/MySalahCoreTests/ProviderTests.swift";
+			sourceTree = "SOURCE_ROOT";
+		};
+		3BFA1D6D77AEEF155CE776BA = {
+			isa = "PBXBuildFile";
+			fileRef = "CEFCB7141D0E93241B0EC105";
+		};
+	};
+	rootObject = "98F54143AB4E86B28C3AFEE0";
+}
