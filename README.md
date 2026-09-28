@@ -15,6 +15,16 @@ MySalah puts Muslim prayer times in the macOS menu bar. A moon and minutes count
 - Cached offline timetables and optional Launch at Login, disabled initially.
 - No account, backend, Dock icon, device-location permission, or analytics.
 
+## Download and install
+
+Compiled builds are distributed through [GitHub Releases](https://github.com/wiruzman/mysalah/releases). Download the **MySalah-v…-macOS.zip** release asset, rather than a Source code archive. Each release supports macOS 14 or later on both Apple Silicon and Intel.
+
+Unzip the download, quit any running copy of MySalah, and move **MySalah.app** to **/Applications**. Open it and look for the moon in the menu bar. To update, replace the existing app in that same folder; preferences and cached timetables are preserved. Keep only one installed copy.
+
+**These builds are ad-hoc signed and are not notarized by Apple.** macOS may block the first launch because it cannot verify the developer or check the app for malicious software. If you trust the download, attempt to open it once, then choose **System Settings → Privacy & Security → Open Anyway** and confirm. See [Apple's instructions for opening an unnotarized app](https://support.apple.com/en-us/102445). Managed Macs may prohibit this override.
+
+Each ZIP has a matching `.sha256` asset. Download both into the same directory, then run `shasum -a 256 -c MySalah-vVERSION-macOS.zip.sha256`, replacing `VERSION` with the downloaded version. This checks download integrity; it does not provide Apple notarization.
+
 ## Getting started
 
 Launch MySalah, click the moon, and choose **Location**. The app resolves the selected town's coordinates and timezone through Apple geocoding. If Apple finds multiple matches, select one under **Confirm location**. No timetable notifications are scheduled until a valid location and timetable are available.
@@ -66,10 +76,10 @@ The application icon is an ivory crescent on a midnight-blue tile. Its complete 
 
 ```sh
 ./scripts/build-local.sh
-./scripts/install-local.sh --launch
+./scripts/install-local.sh --system --launch
 ```
 
-The release bundle is produced at `build/DerivedData/Build/Products/Release/MySalah.app` and installed into `~/Applications/MySalah.app`. The installer verifies signing, stages the new bundle, and refuses to replace an app that is still running. Without `--launch`, it only installs. Rebuild before installing source changes.
+The release bundle is produced at `build/DerivedData/Build/Products/Release/MySalah.app` and the command above installs it into `/Applications/MySalah.app`. The installer verifies signing, stages the new bundle, and refuses to replace an app that is still running. Without `--launch`, it only installs. Rebuild before installing source changes.
 
 On macOS 27 with Pelmet or Hidden Bar, install in the system Applications folder instead:
 
@@ -79,7 +89,30 @@ On macOS 27 with Pelmet or Hidden Bar, install in the system Applications folder
 
 The `--system` option selects `/Applications/MySalah.app` and requires write access to that folder. When migrating an existing installation, quit MySalah and move `~/Applications/MySalah.app` to `/Applications` in Finder first, so there is only one installed copy. Preferences and cached timetables stay in your home Library. Check Launch at Login after changing the installation path if you previously enabled it.
 
-This is a local ad-hoc-signed release. Public distribution would additionally need a Developer ID signature and Apple notarization; App Store distribution is outside the current setup.
+Local and GitHub builds use ad-hoc signing. They can be distributed without an Apple Developer membership, with the first-launch limitations described above. Developer ID signing and Apple notarization would require membership. App Store distribution is outside the current setup.
+
+## Creating a GitHub release
+
+The release workflow in `.github/workflows/release.yml` runs when a tag matching `v*` is pushed. It accepts stable versions in the form `vMAJOR.MINOR.PATCH`, such as `v1.0.0`, and rejects other formats. It uses the macOS 15 runner with Xcode 26.3, runs the offline SwiftPM and native Xcode tests, then builds and verifies a universal ZIP with a SHA-256 checksum. Both dependency lockfiles remain authoritative.
+
+After committing and pushing the intended source changes, tag that commit and push the tag:
+
+```sh
+git tag -a v1.0.0 -m "MySalah 1.0.0"
+git push origin v1.0.0
+```
+
+Use a new version for each release. A successful workflow creates a **draft** GitHub Release containing the ZIP, checksum, installation guidance, and generated change notes. Review the draft and download its ZIP for a first-launch smoke test before choosing **Publish release**. The workflow uses GitHub's built-in token with `contents: write`; no Apple credentials or additional repository secrets are needed. It fails if that release already exists rather than replacing published assets. If a failed upload left an incomplete draft, delete only that draft before rerunning the workflow, retaining the tag.
+
+To exercise packaging locally without creating a tag or GitHub Release:
+
+```sh
+./scripts/package-release.sh v1.0.0 1
+```
+
+The optional second argument is the positive build number (default `1`; CI uses its workflow run number). The app's version comes from the tag. Output is written to `build/releases/v1.0.0/`, using separate build products in `build/ReleaseDerivedData`. Packaging checks both CPU architectures, bundle version, dependency notices, and the ad-hoc signature before and after ZIP extraction. It does not install or launch the app.
+
+Automated tests and archive verification do not replace manual testing of a browser-downloaded copy through Gatekeeper, Intel execution, macOS 14 compatibility, notifications, or Launch at Login.
 
 ## Troubleshooting and local data
 

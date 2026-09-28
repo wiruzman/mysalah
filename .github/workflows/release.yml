@@ -1,0 +1,59 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  release:
+    runs-on: macos-15
+    timeout-minutes: 30
+    permissions:
+      contents: write
+    env:
+      DEVELOPER_DIR: /Applications/Xcode_26.3.app/Contents/Developer
+      RELEASE_TAG: ${{ github.ref_name }}
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
+
+      - name: Validate version tag
+        shell: bash
+        run: |
+          if [[ ! "$RELEASE_TAG" =~ ^v(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)$ ]]; then
+            echo 'Release tags must use vMAJOR.MINOR.PATCH (for example, v1.0.0).' >&2
+            exit 1
+          fi
+          xcodebuild -version
+
+      - name: Test core
+        run: swift test --force-resolved-versions
+
+      - name: Test native app
+        run: >-
+          xcodebuild -project MySalah.xcodeproj -scheme MySalah
+          -configuration Debug -derivedDataPath build/DerivedData
+          -destination 'platform=macOS' -onlyUsePackageVersionsFromResolvedFile test
+
+      - name: Package universal app
+        run: ./scripts/package-release.sh "$RELEASE_TAG" "$GITHUB_RUN_NUMBER"
+
+      - name: Create draft GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          gh release create "$RELEASE_TAG" \
+            "build/releases/$RELEASE_TAG/MySalah-$RELEASE_TAG-macOS.zip" \
+            "build/releases/$RELEASE_TAG/MySalah-$RELEASE_TAG-macOS.zip.sha256" \
+            --verify-tag --draft --title "MySalah $RELEASE_TAG" \
+            --generate-notes --notes-file docs/release-notes.md
