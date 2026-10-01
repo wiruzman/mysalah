@@ -36,6 +36,8 @@ done
 test "$(/usr/libexec/PlistBuddy -c 'Print :CFBundleShortVersionString' "$app/Contents/Info.plist")" = "$version"
 test "$(/usr/libexec/PlistBuddy -c 'Print :CFBundleVersion' "$app/Contents/Info.plist")" = "$build_number"
 test -s "$app/Contents/Resources/ThirdPartyNotices.txt"
+test "$(/usr/libexec/PlistBuddy -c 'Print :CFBundleIconFile' "$app/Contents/Info.plist")" = "MySalah.icns"
+test -s "$app/Contents/Resources/MySalah.icns"
 
 archive="MySalah-$tag-macOS.zip"
 ditto -c -k --sequesterRsrc --keepParent "$app" "$stage/$archive"

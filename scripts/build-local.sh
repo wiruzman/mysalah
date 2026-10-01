@@ -8,6 +8,8 @@ xcodebuild -project MySalah.xcodeproj -scheme MySalah \
   CODE_SIGN_IDENTITY=- CODE_SIGN_STYLE=Manual
 app_source="$project_root/build/DerivedData/Build/Products/Release/MySalah.app"
 test -d "$app_source"
+test "$(/usr/libexec/PlistBuddy -c 'Print :CFBundleIconFile' "$app_source/Contents/Info.plist")" = "MySalah.icns"
+test -s "$app_source/Contents/Resources/MySalah.icns"
 # SwiftPM resource-only updates can leave Xcode's outer app seal stale.
 codesign --force --sign - --preserve-metadata=identifier,entitlements,flags "$app_source"
 codesign --verify --deep --strict "$app_source"

@@ -5,6 +5,7 @@
     <key>CFBundleName</key><string>MySalah</string>
     <key>CFBundleDisplayName</key><string>MySalah</string>
     <key>CFBundleExecutable</key><string>$(EXECUTABLE_NAME)</string>
+    <key>CFBundleIconFile</key><string>MySalah.icns</string>
     <key>CFBundlePackageType</key><string>APPL</string>
     <key>CFBundleShortVersionString</key><string>$(MARKETING_VERSION)</string>
     <key>CFBundleVersion</key><string>$(CURRENT_PROJECT_VERSION)</string>

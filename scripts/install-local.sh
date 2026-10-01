@@ -2,7 +2,7 @@
 set -euo pipefail
 project_root="$(cd "$(dirname "$0")/.." && pwd)"
 launch=false
-install_root="$HOME/Applications"
+install_root=/Applications
 for argument in "$@"; do
   case "$argument" in
     --launch) launch=true ;;

@@ -3,12 +3,15 @@
 Generated with the built-in image generation tool. The 1024-pixel RGBA master is
 `App/Assets.xcassets/AppIcon.appiconset/icon-1024.png`. The original generated
 artwork was resized using macOS `sips`; the transparent surround is preserved.
-Run `./scripts/generate-app-icon.sh` to derive the six smaller PNGs. The ten macOS
-1×/2× slots share files where their pixel dimensions match.
+Run `./scripts/generate-app-icon.sh` to derive the six smaller PNGs and the
+standalone `App/MySalah.icns` file with all ten macOS 1×/2× slots. The asset
+catalog remains the artwork source but is not compiled into the app.
 
-The asset catalog is part of the app's resources and `AppIcon` is selected in
-both build configurations. Xcode supplies the compiled icon and its Info.plist
-metadata. This artwork does not replace the status item's SF Symbol.
+Both build configurations copy `MySalah.icns` into the app's resources, and
+`CFBundleIconFile` names that file explicitly. The app does not set
+`CFBundleIconName`, so system surfaces use the standalone icon instead of an
+asset-catalog lookup. Native tests verify that this file renders the crescent.
+This artwork does not replace the status item's SF Symbol.
 
 The artwork was refined after a Finder comparison: the original tile's bounds
 already matched Music closely (104 versus 102 pixels at 128-pixel resolution,

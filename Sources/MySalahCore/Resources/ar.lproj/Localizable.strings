@@ -26,6 +26,11 @@
 "notifications.denied" = "الإشعارات معطلة في macOS";
 "notifications.unknown" = "لم يُطلب إذن الإشعارات بعد";
 "notifications.failed" = "تعذر جدولة الإشعارات";
+"developerMode" = "وضع المطوّر";
+"notifications.test" = "اختبار الإشعارات";
+"notifications.test.start" = "دخول وقت الصلاة";
+"notifications.test.title" = "اختبار: %@";
+"notifications.test.failed" = "تعذر إرسال إشعار الاختبار";
 "reminders" = "قبل انتهاء وقت الصلاة";
 "reminders.all" = "جميع الصلوات";
 "reminders.custom" = "مخصص";

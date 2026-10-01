@@ -85,8 +85,43 @@ final class DataTests: XCTestCase {
         XCTAssertEqual(settings.theme, .system); XCTAssertEqual(settings.sharedReminder, 0)
         settings.setAllReminders(30); XCTAssertEqual(settings.sharedReminder, 30)
         settings.reminders[.asr] = 15; XCTAssertNil(settings.sharedReminder)
-        settings.theme = .dark; settings.language = .ar; store.save(settings)
+        settings.theme = .dark; settings.language = .ar; settings.developerMode = true; store.save(settings)
         XCTAssertEqual(store.load(), settings)
         XCTAssertEqual(settings.reminder(for: .sunrise), 0)
+    }
+    @MainActor func testLegacyPreferencesPreserveSettingsWithDeveloperModeOff() throws {
+        let name = UUID().uuidString
+        let defaults = UserDefaults(suiteName: name)!
+        defer { defaults.removePersistentDomain(forName: name) }
+        let store = PreferencesStore(defaults: defaults)
+        XCTAssertFalse(store.load().developerMode)
+        let legacy = Data("""
+        {
+          "theme":"dark", "language":"tr", "clockFormat":"twelve",
+          "asrMethod":"hanafi", "startNotifications":false,
+          "reminders":["asr",30],
+          "location": {
+            "locality": {
+              "country":{"id":"26","name":"DANİMARKA","englishName":"DENMARK"},
+              "region":{"id":"685","name":"DANİMARKA","englishName":"DENMARK"},
+              "district":{"id":"12618","name":"KOPENHAG","englishName":"COPENHAGEN"}
+            },
+            "metadata":{"latitude":55.6761,"longitude":12.5683,"timeZoneIdentifier":"Europe/Copenhagen","label":"Copenhagen, Denmark"}
+          }
+        }
+        """.utf8)
+        defaults.set(legacy, forKey: "mysalah.preferences.v1")
+        let preferences = store.load()
+        XCTAssertFalse(preferences.developerMode)
+        XCTAssertEqual(preferences.theme, .dark)
+        XCTAssertEqual(preferences.language, .tr)
+        XCTAssertEqual(preferences.clockFormat, .twelve)
+        XCTAssertEqual(preferences.asrMethod, .hanafi)
+        XCTAssertFalse(preferences.startNotifications)
+        XCTAssertEqual(preferences.reminder(for: .asr), 30)
+        XCTAssertEqual(preferences.location?.locality.id, "26-685-12618")
+        XCTAssertEqual(preferences.location?.metadata.timeZoneIdentifier, "Europe/Copenhagen")
+        store.save(preferences)
+        XCTAssertEqual(store.load(), preferences)
     }
 }

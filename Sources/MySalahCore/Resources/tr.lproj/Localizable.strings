@@ -26,6 +26,11 @@
 "notifications.denied" = "macOS bildirimleri kapalı";
 "notifications.unknown" = "Bildirim izni henüz istenmedi";
 "notifications.failed" = "Bildirimler planlanamadı";
+"developerMode" = "Geliştirici modu";
+"notifications.test" = "Bildirimleri test et";
+"notifications.test.start" = "Vakit başlangıcı";
+"notifications.test.title" = "Test: %@";
+"notifications.test.failed" = "Test bildirimi gönderilemedi";
 "reminders" = "Vakit bitmeden önce";
 "reminders.all" = "Tüm vakitler";
 "reminders.custom" = "Özel";

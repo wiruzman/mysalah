@@ -77,9 +77,24 @@ public struct Preferences: Codable, Equatable, Sendable {
     public var clockFormat: ClockFormat = .system
     public var asrMethod: AsrMethod = .diyanet
     public var startNotifications = true
+    public var developerMode = false
     public var reminders: [Prayer: Int] = [:]
     public var location: SelectedLocation?
     public init() {}
+    private enum CodingKeys: String, CodingKey {
+        case theme, language, clockFormat, asrMethod, startNotifications, developerMode, reminders, location
+    }
+    public init(from decoder: any Decoder) throws {
+        let values = try decoder.container(keyedBy: CodingKeys.self)
+        theme = try values.decode(Theme.self, forKey: .theme)
+        language = try values.decode(AppLanguage.self, forKey: .language)
+        clockFormat = try values.decode(ClockFormat.self, forKey: .clockFormat)
+        asrMethod = try values.decode(AsrMethod.self, forKey: .asrMethod)
+        startNotifications = try values.decode(Bool.self, forKey: .startNotifications)
+        developerMode = try values.decodeIfPresent(Bool.self, forKey: .developerMode) ?? false
+        reminders = try values.decode([Prayer: Int].self, forKey: .reminders)
+        location = try values.decodeIfPresent(SelectedLocation.self, forKey: .location)
+    }
     public func reminder(for prayer: Prayer) -> Int {
         let value = reminders[prayer] ?? 0
         return prayer != .sunrise && [15, 30, 45].contains(value) ? value : 0

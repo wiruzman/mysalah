@@ -31,6 +31,8 @@ Launch MySalah, click the moon, and choose **Location**. The app resolves the se
 
 The first valid configuration requests notification permission if notifications are enabled. You can change this later from **Prayer-start notifications → Open Notification Settings**. macOS Focus and notification settings control how alerts appear and sound.
 
+Enable **Developer Mode → On** to reveal **Test Notifications**. Developer Mode defaults to Off, persists across launches, and hides the test menu when disabled. Use **Test Notifications → prayer → notification type** to check each prayer-start alert and its 15/30/45-minute end reminders immediately. Test alerts are marked “Test” and use the app's current language and normal alert wording. They work without a selected location and with regular alerts turned off, but require existing macOS notification permission. Tests do not request permission, change preferences, or replace scheduled prayer alerts; each test replaces the previous test notification. Focus and macOS notification settings still apply.
+
 All settings persist and apply immediately. **Before prayer ends → All prayers** replaces the five individual reminder values; changing one afterward makes the shared setting **Custom**. Sunrise remains informational and does not have its own alert.
 
 The theme affects the dropdown; the template moon follows the system menu bar's contrast. Launch at Login is managed through macOS Service Management and can require approval under System Settings → General → Login Items.
@@ -70,7 +72,7 @@ Core tests use clock inputs, URLProtocol stubs, and API responses captured on 28
 
 The core Swift package owns domain logic; AppKit/SwiftUI and OS services live in `App`. See [AGENTS.md](AGENTS.md) for development conventions and timing invariants. Dependencies are pinned in the checked-in lockfiles. MIT notices are bundled and available through **About MySalah**.
 
-The application icon is an ivory crescent on a midnight-blue tile. Its complete macOS size set lives in `App/Assets.xcassets/AppIcon.appiconset`; Xcode compiles it into both Debug and Release bundles for Finder, About, and system surfaces. The menu bar continues to use the native template moon. After editing the 1024-pixel master, run `./scripts/generate-app-icon.sh` to regenerate smaller sizes. See [the artwork notes](docs/app-icon.md) for the source prompt.
+The application icon is an ivory crescent on a midnight-blue tile. Its artwork source lives in `App/Assets.xcassets/AppIcon.appiconset`; both Debug and Release bundles include the complete standalone `App/MySalah.icns` icon with an explicit `CFBundleIconFile` reference for Finder, About, and notifications. The menu bar continues to use the native template moon. After editing the 1024-pixel master, run `./scripts/generate-app-icon.sh` to regenerate smaller PNGs and the ICNS file. See [the artwork notes](docs/app-icon.md) for the source prompt.
 
 ## Build and install locally
 
@@ -79,15 +81,9 @@ The application icon is an ivory crescent on a midnight-blue tile. Its complete 
 ./scripts/install-local.sh --system --launch
 ```
 
-The release bundle is produced at `build/DerivedData/Build/Products/Release/MySalah.app` and the command above installs it into `/Applications/MySalah.app`. The installer verifies signing, stages the new bundle, and refuses to replace an app that is still running. Without `--launch`, it only installs. Rebuild before installing source changes.
+The release bundle is produced at `build/DerivedData/Build/Products/Release/MySalah.app` and the installer defaults to `/Applications/MySalah.app` (`--system` remains supported). The installer verifies signing, stages the new bundle, and refuses to replace an app that is still running. Without `--launch`, it only installs. Rebuild before installing source changes.
 
-On macOS 27 with Pelmet or Hidden Bar, install in the system Applications folder instead:
-
-```sh
-./scripts/install-local.sh --system --launch
-```
-
-The `--system` option selects `/Applications/MySalah.app` and requires write access to that folder. When migrating an existing installation, quit MySalah and move `~/Applications/MySalah.app` to `/Applications` in Finder first, so there is only one installed copy. Preferences and cached timetables stay in your home Library. Check Launch at Login after changing the installation path if you previously enabled it.
+Installation requires write access to `/Applications`. Keep this location when using Pelmet or Hidden Bar on macOS 27. When migrating an existing installation, quit MySalah and move `~/Applications/MySalah.app` to `/Applications` in Finder first, so there is only one installed copy. Preferences and cached timetables stay in your home Library. Check Launch at Login after changing the installation path if you previously enabled it.
 
 Local and GitHub builds use ad-hoc signing. They can be distributed without an Apple Developer membership, with the first-launch limitations described above. Developer ID signing and Apple notarization would require membership. App Store distribution is outside the current setup.
 
@@ -120,6 +116,7 @@ Automated tests and archive verification do not replace manual testing of a brow
 - **No times:** choose a location, then Refresh. Location lookup needs Apple geocoding access; prayer data needs `ezanvakti.emushaf.net`. The app never substitutes the device timezone if location resolution fails.
 - **Saved/offline times:** the provider could not be reached. Current cached dates still work; retry when connected.
 - **No alerts:** check the app's notification choices, macOS notification permission, and Focus. End reminders are skipped if the chosen interval would fall before that prayer starts.
+- **Blank notification icon after local updates:** a restart resolved the observed placeholder on macOS 27 after installing the updated app. Try a fresh alert from **Test Notifications** after restarting. Notification appearance must be checked in macOS; automated icon tests only verify the packaged artwork.
 - **Login startup needs approval:** use the approval item in the Launch at Login submenu, then check macOS Login Items. Install in a stable Applications folder before enabling it.
 - **Native tests and macOS versions:** offscreen UI tests do not replace a real VoiceOver/notification/login smoke test. macOS 14 API compatibility is enforced by the deployment target; testing on a macOS 14 machine remains separate from testing the current OS.
 

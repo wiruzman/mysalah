@@ -2,10 +2,23 @@ import Foundation
 import UserNotifications
 import MySalahCore
 
+enum NotificationTestKind: CaseIterable, Equatable, Sendable {
+    case start, end15, end30, end45
+    var reminderMinutes: Int? {
+        switch self { case .start: nil; case .end15: 15; case .end30: 30; case .end45: 45 }
+    }
+    func title(using strings: Localizer) -> String {
+        reminderMinutes.map { strings.text("minutesBefore", $0) } ?? strings.text("notifications.test.start")
+    }
+}
+
+enum NotificationTestError: Error { case notAuthorized, invalidPrayer }
+
 @MainActor protocol NotificationManaging {
     var authorization: UNAuthorizationStatus { get }
     func updateAuthorization(request: Bool) async
     func replace(with events: [PlannedNotification]) async throws
+    func sendTest(prayer: Prayer, kind: NotificationTestKind, language: AppLanguage) async throws
 }
 
 @MainActor final class NotificationService: NSObject, UNUserNotificationCenterDelegate, NotificationManaging {
@@ -22,6 +35,22 @@ import MySalahCore
             status = await center.notificationSettings().authorizationStatus
         }
         authorization = status
+    }
+
+    static func testRequest(prayer: Prayer, kind: NotificationTestKind, language: AppLanguage) throws -> UNNotificationRequest {
+        guard Prayer.obligatory.contains(prayer) else { throw NotificationTestError.invalidPrayer }
+        let message = NotificationPlanner.message(prayer: prayer, reminderMinutes: kind.reminderMinutes, language: language)
+        let content = UNMutableNotificationContent()
+        content.title = Localizer(language: language).text("notifications.test.title", message.title)
+        content.body = message.body; content.sound = .default
+        // Immediate delivery leaves the rolling timetable's 60 pending slots alone.
+        // Reuse one separate identifier so repeated tests replace the previous test.
+        return UNNotificationRequest(identifier: "mysalah-test", content: content, trigger: nil)
+    }
+
+    func sendTest(prayer: Prayer, kind: NotificationTestKind, language: AppLanguage) async throws {
+        guard authorization == .authorized || authorization == .provisional else { throw NotificationTestError.notAuthorized }
+        try await center.add(Self.testRequest(prayer: prayer, kind: kind, language: language))
     }
 
     func replace(with events: [PlannedNotification]) async throws {

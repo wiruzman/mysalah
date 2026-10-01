@@ -160,6 +160,25 @@ private struct CachedPlaces: Codable, Sendable {
             let child = submenu(strings.name(prayer), to: reminders)
             reminderChoices(in: child, value: model.preferences.reminder(for: prayer)) { [weak model] value in model?.update { $0.reminders[prayer] = value } }
         }
+        if model.preferences.developerMode {
+            let tests = submenu(strings.text("notifications.test"), to: menu)
+            tests.addItem(label(strings.text(model.notificationStatusKey)))
+            if let failure = model.notificationTestFailureKey { tests.addItem(label(strings.text(failure))) }
+            if !model.canSendTestNotification {
+                tests.addItem(action(strings.text("notifications.settings")) {
+                    if let url = URL(string: "x-apple.systempreferences:com.apple.Notifications-Settings.extension") { NSWorkspace.shared.open(url) }
+                })
+            }
+            tests.addItem(.separator())
+            for prayer in Prayer.obligatory {
+                let child = submenu(strings.name(prayer), to: tests)
+                for kind in NotificationTestKind.allCases {
+                    let entry = action(kind.title(using: strings)) { [weak model] in model?.sendTestNotification(prayer: prayer, kind: kind) }
+                    entry.isEnabled = model.canSendTestNotification
+                    child.addItem(entry)
+                }
+            }
+        }
         let login = submenu(strings.text("login"), to: menu)
         boolChoices(in: login, value: model.loginEnabled) { [weak model] enabled in model?.setLogin(enabled) }
         if model.loginRequiresApproval { login.addItem(action(strings.text("login.approval")) { SMAppService.openSystemSettingsLoginItems() }) }
@@ -170,6 +189,8 @@ private struct CachedPlaces: Codable, Sendable {
             theme.addItem(action(strings.text(value.rawValue), selected: model.preferences.theme == value) { [weak model] in model?.update { $0.theme = value } })
         }
         menu.addItem(.separator())
+        let developer = submenu(strings.text("developerMode"), to: menu)
+        boolChoices(in: developer, value: model.preferences.developerMode) { [weak model] enabled in model?.setDeveloperMode(enabled) }
         menu.addItem(action(strings.text("about")) { [weak self] in self?.showAbout() })
         menu.addItem(action(strings.text("quit"), key: "q") { NSApp.terminate(nil) })
     }

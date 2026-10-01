@@ -26,6 +26,11 @@
 "notifications.denied" = "Notifikationer slået fra i macOS";
 "notifications.unknown" = "Notifikationstilladelse ikke anmodet";
 "notifications.failed" = "Kunne ikke planlægge notifikationer";
+"developerMode" = "Udviklertilstand";
+"notifications.test" = "Test notifikationer";
+"notifications.test.start" = "Bønnen er begyndt";
+"notifications.test.title" = "Test: %@";
+"notifications.test.failed" = "Kunne ikke sende testnotifikation";
 "reminders" = "Før bønnetiden slutter";
 "reminders.all" = "Alle bønner";
 "reminders.custom" = "Tilpasset";

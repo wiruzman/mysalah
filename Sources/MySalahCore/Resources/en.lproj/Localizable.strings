@@ -26,6 +26,11 @@
 "notifications.denied" = "Notifications disabled in macOS";
 "notifications.unknown" = "Notification permission not requested";
 "notifications.failed" = "Unable to schedule notifications";
+"developerMode" = "Developer Mode";
+"notifications.test" = "Test Notifications";
+"notifications.test.start" = "Prayer started";
+"notifications.test.title" = "Test: %@";
+"notifications.test.failed" = "Unable to send test notification";
 "reminders" = "Before prayer ends";
 "reminders.all" = "All prayers";
 "reminders.custom" = "Custom";

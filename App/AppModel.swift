@@ -15,6 +15,7 @@ import MySalahCore
     var pendingLocality: Locality?
     var locationMatches: [LocationMetadata] = []
     var notificationStatusKey = "notifications.unknown"
+    var notificationTestFailureKey: String?
     var loginEnabled = false
     var loginRequiresApproval = false
     var onMenuNeedsUpdate: (() -> Void)?
@@ -34,6 +35,8 @@ import MySalahCore
     @ObservationIgnored private var retryCount = 0
     @ObservationIgnored private var lastDay: Date?
     @ObservationIgnored private var syncGeneration = UUID()
+    @ObservationIgnored private var testGeneration = UUID()
+    @ObservationIgnored private var notificationTestTask: Task<Void, Never>?
 
     init(provider: any PrayerTimeProvider = EzanVaktiProvider(), resolver: any LocationResolving = AppleLocationResolver(), cache: DiskCache = DiskCache(), store: PreferencesStore = PreferencesStore(), notifications: any NotificationManaging = NotificationService(), clock: any AppClock = SystemClock()) {
         self.provider = provider; self.resolver = resolver; self.cache = cache; self.store = store; self.notifications = notifications; self.clock = clock
@@ -41,6 +44,7 @@ import MySalahCore
         refreshLoginStatus()
     }
     var strings: Localizer { Localizer(language: preferences.language) }
+    var canSendTestNotification: Bool { preferences.developerMode && (notifications.authorization == .authorized || notifications.authorization == .provisional) }
     var timeZone: TimeZone? { preferences.location?.metadata.timeZone }
     var snapshot: ScheduleSnapshot? {
         guard let zone = timeZone else { return nil }
@@ -196,14 +200,46 @@ import MySalahCore
             let hasNotifications = preferences.startNotifications || preferences.reminders.values.contains { $0 > 0 }
             await notifications.updateAuthorization(request: requestPermission && snapshot?.hasToday == true && hasNotifications)
             guard token == syncGeneration else { return }
-            switch notifications.authorization {
-            case .authorized, .provisional: notificationStatusKey = "notifications.allowed"
-            case .denied: notificationStatusKey = "notifications.denied"
-            default: notificationStatusKey = "notifications.unknown"
-            }
+            updateNotificationStatus()
             let events = timeZone.map { NotificationPlanner().plan(days: days, preferences: preferences, now: clock.now(), timeZone: $0) } ?? []
             do { try await notifications.replace(with: events) }
             catch { if token == syncGeneration { notificationStatusKey = "notifications.failed" } }
+            onMenuNeedsUpdate?()
+        }
+    }
+    private func updateNotificationStatus() {
+        switch notifications.authorization {
+        case .authorized, .provisional: notificationStatusKey = "notifications.allowed"
+        case .denied: notificationStatusKey = "notifications.denied"
+        default: notificationStatusKey = "notifications.unknown"
+        }
+    }
+    func setDeveloperMode(_ enabled: Bool) {
+        preferences.developerMode = enabled
+        store.save(preferences)
+        if !enabled {
+            notificationTestTask?.cancel()
+            testGeneration = UUID()
+            notificationTestFailureKey = nil
+        }
+        onMenuNeedsUpdate?()
+    }
+    func sendTestNotification(prayer: Prayer, kind: NotificationTestKind) {
+        guard preferences.developerMode else { return }
+        let language = strings.language
+        notificationTestTask?.cancel()
+        testGeneration = UUID(); let token = testGeneration
+        notificationTestTask = Task { [weak self] in
+            guard let self else { return }
+            notificationTestFailureKey = nil
+            await notifications.updateAuthorization(request: false)
+            guard token == testGeneration, !Task.isCancelled else { return }
+            updateNotificationStatus()
+            if canSendTestNotification {
+                do { try await notifications.sendTest(prayer: prayer, kind: kind, language: language) }
+                catch { if token == testGeneration { notificationTestFailureKey = "notifications.test.failed" } }
+            }
+            guard token == testGeneration, !Task.isCancelled else { return }
             onMenuNeedsUpdate?()
         }
     }
